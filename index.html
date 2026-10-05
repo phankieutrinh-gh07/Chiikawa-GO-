@@ -9,6 +9,23 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Chiikawa GO!">
 <title>Chiikawa GO!</title>
+<meta name="description" content="Thả · gộp · tạo ra Bộ ba Chiikawa! Game ghép nhân vật Chiikawa, chơi miễn phí ngay trên điện thoại và máy tính.">
+<!-- Thumbnail khi chia sẻ link (Facebook, Messenger, Zalo, Discord...). og:image phải là link đầy đủ https:// -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chiikawa-go.vercel.app/">
+<meta property="og:site_name" content="Chiikawa GO!">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Chiikawa GO! — Game Trình Duyệt">
+<meta property="og:description" content="Thả · gộp · tạo ra Bộ ba Chiikawa! Game ghép nhân vật Chiikawa, chơi miễn phí ngay trên điện thoại và máy tính.">
+<meta property="og:image" content="https://chiikawa-go.vercel.app/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Chiikawa GO! - game ghép nhân vật Chiikawa">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Chiikawa GO! — Game Trình Duyệt">
+<meta name="twitter:description" content="Thả · gộp · tạo ra Bộ ba Chiikawa! Chơi miễn phí ngay trên trình duyệt.">
+<meta name="twitter:image" content="https://chiikawa-go.vercel.app/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
@@ -411,7 +428,7 @@ const INK = '#3a2a2a';
 
 /* NHẠC NỀN: để '' thì game tự chơi nhạc lo-fi chill tạo bằng code (không cần file nhạc).
    Muốn dùng bài hát riêng: bỏ file .mp3 vào thư mục "music" cạnh file này rồi ghi tên, vd: 'music/chill.mp3' */
-const MUSIC_FILE = '';
+const MUSIC_FILE = 'music/bgm.mp3';
 const MUSIC_VOLUME = 0.45; // độ to nhạc nền: từ 0 đến 1
 
 /* ================= drawing helpers ================= */
@@ -822,7 +839,8 @@ const CLOUDS = [
    Chủ đề bằng ẢNH (đặt ảnh vào thư mục img/themes):
    - bg: 'img/themes/ten-anh.jpg'      → ảnh nền cả màn chơi (nên dùng ảnh dọc 800×1280, tự cắt cho vừa)
    - boxImg: 'img/themes/ten-anh.jpg'  → ảnh bên trong hộp (nên dùng 720×1000)
-   - boxAlpha: 0 → 1                   → độ đậm màu "inner" phủ lên ảnh (0 = thấy rõ ảnh, 1 = che kín ảnh)
+   - boxAlpha: 0 → 1                   → độ đậm màu "inner" phủ lên ảnh (0 = trong suốt, 1 = che kín ảnh; mặc định 0.2)
+   - không ghi frame/edge/inner/cap/capEdge → hũ thuỷ tinh trong suốt (viền trắng mờ)
    - stripe: ''                        → bỏ sọc trong hộp
    - deco: 'clouds' | 'sun' | 'stars' | 'petals' (hoặc bỏ đi nếu ảnh đã đẹp sẵn) */
 const THEMES = [
@@ -831,6 +849,8 @@ const THEMES = [
   { id: 'sunset', name: 'Hoàng hôn',   price: 150, sky: ['#ffcfa3', '#ffb8c6', '#cdb8f0'], frame: '#ffb68a', edge: '#e08458', inner: '#fff8f1', stripe: 'rgba(255,180,140,.15)', cap: '#ff9a6b', capEdge: '#d9744a', deco: 'sun' },
   { id: 'night',  name: 'Đêm sao',     price: 200, sky: ['#1f2350', '#3b3f7a', '#6b5a9c'], frame: '#8f86d6', edge: '#5c54a8', inner: '#f6f3ff', stripe: 'rgba(150,140,220,.13)', cap: '#b3a9ff', capEdge: '#6f66c4', deco: 'stars' },
   { id: 'sakura', name: 'Hoa anh đào', price: 250, sky: ['#ffe1ee', '#fff5f9', '#ffe9f1'], frame: '#ffd0e0', edge: '#f29bb8', inner: '#fffafc', stripe: 'rgba(255,170,200,.15)', cap: '#ff8fb4', capEdge: '#e0668f', deco: 'petals' },
+  { id: 'candy',  name: 'Kẹo bông',    price: 500, bg: 'img/themes/pink.png',boxAlpha: 0.2, frame: '#f0a9bf', edge: '#d98a9e', inner: '#fffafc', cap: '#ff9fb8', capEdge: '#e07a98' },
+  { id: 'sun',    name: 'Mặt trời',    price: 600, bg: 'img/themes/sun.png' },
   // Ví dụ chủ đề bằng ảnh – bỏ // ở đầu dòng và đặt ảnh vào img/themes:
   // { id: 'bien', name: 'Bãi biển', price: 300, bg: 'img/themes/bien.jpg', boxAlpha: 0.55, sky: ['#bfe6ff', '#e8f6ff', '#fff5e0'], frame: '#ffd59e', edge: '#e0a35a', inner: '#fffaf0', stripe: '', cap: '#ffb870', capEdge: '#d98a3a' },
 ];
@@ -853,6 +873,8 @@ const MAX_CUSTOM = 6;      // số chủ đề tự tạo tối đa
 const allThemes = () => THEMES.concat(S.customThemes);
 const theme = () => allThemes().find(t => t.id === S.theme) || THEMES[0];
 const DEF_SKY = ['#dff0ff', '#fdf2f8', '#ffe6ee'];
+// màu hũ mặc định khi chủ đề không ghi frame/edge/inner/cap/capEdge → hũ thuỷ tinh trong suốt
+const GLASS = { frame: 'rgba(255,255,255,.4)', edge: 'rgba(255,255,255,.95)', inner: '#ffffff', cap: '#ffffff', capEdge: 'rgba(240,150,180,.9)' };
 const skyOf = th => (th.sky && th.sky.length > 1 ? th.sky : DEF_SKY);
 const cloudSkin = id => CLOUDS.find(c => c.id === id) || CLOUDS[0];
 
@@ -1259,6 +1281,7 @@ function coverImg(g, im, x, y, w, h) { // phủ kín khung, cắt phần thừa,
 }
 // background in world units (sky, decorations, basket) — also used for theme previews
 function paintBg(g, th) {
+  th = { ...GLASS, ...th };
   const skyC = skyOf(th);
   const bgIm = themeImg(th.bg !== undefined ? th.bg : customBg[th.id]), boxIm = themeImg(th.boxImg);
   if (bgIm) coverImg(g, bgIm, 0, 0, W, H);
@@ -1291,7 +1314,7 @@ function paintBg(g, th) {
   inner.lineTo(BOX.r - 14, BOX.b); inner.arcTo(BOX.r, BOX.b, BOX.r, BOX.b - 14, 14); inner.lineTo(BOX.r, ft - 2); inner.closePath();
   if (bgIm) { g.save(); g.clip(inner); coverImg(g, bgIm, 0, 0, W, H); g.restore(); } // ảnh nền nhìn xuyên vào trong hộp
   if (boxIm) { g.save(); g.clip(inner); coverImg(g, boxIm, BOX.l, ft, BOX.r - BOX.l, BOX.b - ft); g.restore(); }
-  g.globalAlpha = th.boxAlpha != null ? clamp(+th.boxAlpha, 0, 1) : boxIm ? 0 : bgIm ? 0.8 : 1;
+  g.globalAlpha = th.boxAlpha != null ? clamp(+th.boxAlpha, 0, 1) : boxIm ? 0 : bgIm ? 0.2 : 1;
   g.fillStyle = th.inner; g.fill(inner); g.globalAlpha = 1;
   if (th.stripe) {
     g.save(); g.clip(inner); g.fillStyle = th.stripe;

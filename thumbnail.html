@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<!--
+  THIẾT KẾ ẢNH THUMBNAIL (ảnh hiện ra khi gửi link cho bạn bè)
+  - Kích thước chuẩn: 1200 x 630.
+  - Sửa chữ / ảnh ở phần <body> bên dưới, mở file bằng Chrome để xem.
+  - Xuất ra ảnh: xem hướng dẫn trong chat (hoặc chụp màn hình đúng khung 1200x630).
+-->
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800;900&family=Itim&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#5a3d46;
+  --pink:#ff8fab;
+  --pink-d:#ef6a90;
+  --cream:#fffaf2;
+}
+*{box-sizing:border-box;margin:0}
+html,body{width:1200px;height:630px;overflow:hidden;background:#ffe3ec}
+
+/* ===== Nền caro hồng + chấm bi ===== */
+.card{
+  position:relative;width:1200px;height:630px;overflow:hidden;
+  font-family:'Nunito',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.75) 2.5px, transparent 3px) 0 0/28px 28px,
+    repeating-linear-gradient(0deg, rgba(255,180,200,.28) 0 30px, transparent 30px 60px),
+    repeating-linear-gradient(90deg, rgba(255,180,200,.28) 0 30px, transparent 30px 60px),
+    linear-gradient(160deg,#ffeef3,#ffd9e4);
+}
+
+/* ===== Dây cờ trang trí ===== */
+.bunting{position:absolute;left:0;top:0;width:1200px;height:110px}
+
+/* ===== Cột trái ===== */
+.left{position:absolute;left:58px;top:74px;width:520px}
+.badge{
+  display:inline-block;padding:7px 18px;border-radius:99px;
+  background:#fff;border:3px solid #ffc2d3;color:var(--pink-d);
+  font:900 20px 'Nunito',sans-serif;letter-spacing:.3px;
+  transform:rotate(-3deg);box-shadow:0 4px 0 #ffc2d3;margin-left:10px;
+}
+.title{
+  margin-top:12px;padding:14px 30px 8px;border-radius:34px;
+  background:var(--cream);border:6px solid #ffb6c8;
+  box-shadow:0 8px 0 #f59ab3, 0 18px 30px rgba(214,120,150,.25);
+  outline:3px dashed #ffc9d6;outline-offset:-18px;
+  font:800 84px/0.95 'Baloo 2',cursive;text-align:center;
+}
+.title em{font-style:normal;color:var(--pink-d);display:block;font-size:102px}
+.desc{
+  position:relative;margin:24px 20px 0;padding:14px 24px;border-radius:26px;
+  background:#fff;border:3px dashed #ffb6c8;text-align:center;
+  font:800 25px/1.35 'Nunito',sans-serif;
+}
+.desc small{display:block;font-size:20px;color:#b07d8b;font-weight:700}
+.play{
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  margin:24px auto 0;width:320px;height:78px;border-radius:99px;
+  background:linear-gradient(#ffa3bb,var(--pink));border:4px solid #fff;
+  box-shadow:0 8px 0 var(--pink-d), 0 16px 24px rgba(239,106,144,.35);
+  color:#fff;font:800 40px 'Baloo 2',cursive;
+  text-shadow:0 2px 0 rgba(200,70,110,.45);
+}
+.play svg{width:64px;height:24px}
+
+/* ===== Khung ảnh bên phải (viền răng cưa) ===== */
+.frame{
+  position:absolute;left:640px;top:70px;width:500px;height:470px;
+  transform:rotate(3deg);padding:22px;
+  background:#fff;border-radius:28px;
+  box-shadow:0 14px 34px rgba(190,90,120,.28);
+}
+.frame::before{ /* răng cưa quanh viền */
+  content:"";position:absolute;inset:-12px;border-radius:38px;z-index:-1;
+  background:radial-gradient(circle,#fff 11px,transparent 12px) 0 0/26px 26px;
+}
+.photo{
+  position:relative;width:100%;height:100%;border-radius:18px;overflow:hidden;
+  background:linear-gradient(#ffe6ee,#ffd0dd);
+}
+.photo img{
+  width:100%;height:100%;object-fit:cover;
+  transform:scale(1.4);transform-origin:50% 74%; /* phóng to + chỉnh vị trí cắt ảnh */
+}
+.tape{
+  position:absolute;width:150px;height:40px;top:-16px;left:175px;
+  background:repeating-linear-gradient(45deg,#ffc6d5 0 10px,#ffe0e8 10px 20px);
+  opacity:.9;transform:rotate(-4deg);border-radius:4px;
+}
+
+/* ===== Sticker ===== */
+.stk{position:absolute;filter:drop-shadow(0 0 0 #fff) drop-shadow(0 5px 6px rgba(170,90,110,.3))}
+.round{border-radius:50%;border:7px solid #fff}
+.heart{position:absolute;color:#ff9db6;font-size:34px}
+.scene-title{ /* dòng chữ viết tay trong khung ảnh */
+  position:absolute;left:0;right:0;top:20px;text-align:center;
+  font:400 40px 'Itim',cursive;color:var(--ink);
+  text-shadow:-3px 0 #fff,3px 0 #fff,0 -3px #fff,0 3px #fff,-2px -2px #fff,2px 2px #fff,-2px 2px #fff,2px -2px #fff;
+}
+.scene-title b{color:var(--pink-d);font-weight:400}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- Dây cờ -->
+  <svg class="bunting" viewBox="0 0 1200 110">
+    <path d="M-10 18 Q300 70 610 22 T1210 26" fill="none" stroke="#e7a3b5" stroke-width="3"/>
+    <g stroke="#fff" stroke-width="3" stroke-linejoin="round">
+      <path d="M30 26 l50 8 -30 46z"  fill="#ffd36e"/>
+      <path d="M110 38 l52 6 -29 48z" fill="#a8d8f0"/>
+      <path d="M195 46 l52 2 -26 50z" fill="#ff9db6"/>
+      <path d="M280 49 l52 -2 -25 50z" fill="#c8e6a0"/>
+      <path d="M365 46 l52 -6 -23 49z" fill="#d7c2f5"/>
+      <path d="M450 38 l52 -8 -21 48z" fill="#ffd36e"/>
+      <path d="M535 29 l52 -7 -22 48z" fill="#ff9db6"/>
+    </g>
+  </svg>
+
+  <!-- Cột trái: chữ + nút -->
+  <div class="left">
+    <span class="badge">Game trên trình duyệt</span>
+    <h1 class="title">Chiikawa <em>GO!</em></h1>
+    <p class="desc">
+      Thả · gộp · tạo ra Bộ ba Chiikawa!
+      <small>Chơi miễn phí trên điện thoại &amp; máy tính</small>
+    </p>
+    <div class="play">
+      chơi ngay
+      <svg viewBox="0 0 64 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h54M48 3l10 9-10 9"/></svg>
+    </div>
+  </div>
+
+  <!-- Khung ảnh bên phải -->
+  <div class="frame">
+    <div class="photo">
+      <img src="img/logo.png" alt="">
+      <p class="scene-title">Gộp các bé lại nào <b>&#9825;</b></p>
+    </div>
+    <div class="tape"></div>
+  </div>
+
+  <!-- Sticker nhân vật (đổi ảnh / vị trí tuỳ thích) -->
+  <img class="stk round" src="img/bo3.png"       style="left:575px;top:385px;width:190px;transform:rotate(-8deg)" alt="">
+  <img class="stk"       src="img/usagi.png"     style="left:1075px;top:450px;width:115px;transform:rotate(10deg)" alt="">
+  <img class="stk"       src="img/hachiware.png" style="left:1085px;top:16px;width:100px;transform:rotate(12deg)" alt="">
+  <img class="stk"       src="img/star.png"      style="left:595px;top:30px;width:78px;transform:rotate(-14deg)" alt="">
+  <img class="stk"       src="img/chiikawa.png"  style="left:18px;top:520px;width:96px;transform:rotate(-10deg)" alt="">
+
+  <span class="heart" style="left:520px;top:120px">&#10084;</span>
+  <span class="heart" style="left:600px;top:560px;font-size:26px;color:#ffc0d0">&#10084;</span>
+  <span class="heart" style="left:1150px;top:300px;font-size:28px">&#10084;</span>
+  <span class="heart" style="left:30px;top:120px;font-size:24px;color:#ffc0d0">&#10084;</span>
+</div>
+</body>
+</html>
