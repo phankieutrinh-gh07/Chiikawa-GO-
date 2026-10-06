@@ -30,6 +30,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="/img/logo.png" type="image/png" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root{
   --bg:#fff1f5;
@@ -2159,6 +2161,12 @@ function frame(now) {
 }
 requestAnimationFrame(frame);
 })();
+</script>
+<script>
+// cài game như app + chơi offline (cần file sw.js nằm cạnh index.html)
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(e => console.warn('Không bật được chơi offline:', e)));
+}
 </script>
 </body>
 </html>
